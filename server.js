@@ -6,7 +6,6 @@ const cors = require('cors');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // ✅ Fix: Proper CORS handling
 app.use(cors({
@@ -55,7 +54,7 @@ app.post('/api/contact', (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error('Error sending email:', error);
-            return res.status(500).json({ error: 'Failed to send email. Please try again later.' });
+        return res.status(500).json({ error: 'Failed to send email. Please try again later.' });
         }
         console.log('Email sent:', info.response);
         return res.json({ message: 'Email sent successfully' });
@@ -67,6 +66,5 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Not Found' });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// ✅ Important: Export the app for Vercel
+module.exports = app;
